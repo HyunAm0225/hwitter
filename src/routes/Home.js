@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { dbService } from "fbase";
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [hweet, setHweet] = useState("");
   const [hweets, setHweets] = useState([]);
-  const getHweets = async () => {
-    const dbHweets = await dbService.collection("hweets").get();
-    dbHweets.forEach(document => {
-      const hweetObject = {
-        ...document.data(),
-        id: document.id,
-      };
-      setHweets(prev => [hweetObject, ...prev]);
-    });
-  };
+
   useEffect(() => {
-    getHweets();
+    dbService.collection("hweets").onSnapshot(snapshot => {
+      const hweetArray = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setHweets(hweetArray);
+    });
   }, []);
   const onSubmit = async event => {
     event.preventDefault();
     await dbService.collection("hweets").add({
-      hweet,
+      text: hweet,
       createdAt: Date.now(),
+      creatorId: userObj.uid,
     });
     setHweet("");
   };
@@ -31,8 +29,6 @@ const Home = () => {
     } = event;
     setHweet(value);
   };
-  console.log(hweets);
-  //   const
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -42,7 +38,7 @@ const Home = () => {
       <div>
         {hweets.map(hweet => (
           <div key={hweet.id}>
-            <h4>{hweet.hweet}</h4>
+            <h4>{hweet.text}</h4>
           </div>
         ))}
       </div>
