@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import { dbService } from "fbase";
 
 const Home = () => {
   const [hweet, setHweet] = useState("");
-  const onSubmit = event => {
+  const onSubmit = async event => {
     event.preventDefault();
+    await dbService.collection("hweets").add({
+      hweet,
+      createdAt: Date.now(),
+    });
+    setHweet("");
   };
   const onChange = event => {
     const {
@@ -14,8 +20,8 @@ const Home = () => {
   //   const
   return (
     <div>
-      <form>
-        <input type="text" onChange={onChange} placeholder="What's on your mind?" maxLength={120} />
+      <form onSubmit={onSubmit}>
+        <input type="text" value={hweet} onChange={onChange} placeholder="What's on your mind?" maxLength={120} />
         <input type="submit" value="Hweet" />
       </form>
     </div>
