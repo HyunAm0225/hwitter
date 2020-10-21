@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { dbService } from "fbase";
 
 const Home = () => {
   const [hweet, setHweet] = useState("");
+  const [hweets, setHweets] = useState([]);
+  const getHweets = async () => {
+    const dbHweets = await dbService.collection("hweets").get();
+    dbHweets.forEach(document => {
+      const hweetObject = {
+        ...document.data(),
+        id: document.id,
+      };
+      setHweets(prev => [hweetObject, ...prev]);
+    });
+  };
+  useEffect(() => {
+    getHweets();
+  }, []);
   const onSubmit = async event => {
     event.preventDefault();
     await dbService.collection("hweets").add({
@@ -17,6 +31,7 @@ const Home = () => {
     } = event;
     setHweet(value);
   };
+  console.log(hweets);
   //   const
   return (
     <div>
@@ -24,6 +39,13 @@ const Home = () => {
         <input type="text" value={hweet} onChange={onChange} placeholder="What's on your mind?" maxLength={120} />
         <input type="submit" value="Hweet" />
       </form>
+      <div>
+        {hweets.map(hweet => (
+          <div key={hweet.id}>
+            <h4>{hweet.hweet}</h4>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
