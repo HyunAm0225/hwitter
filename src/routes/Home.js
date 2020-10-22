@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import Hweet from "components/hweet";
+import { v4 as uuidv4 } from "uuid";
 
 const Home = ({ userObj }) => {
   const [hweet, setHweet] = useState("");
@@ -18,12 +19,15 @@ const Home = ({ userObj }) => {
   }, []);
   const onSubmit = async event => {
     event.preventDefault();
-    await dbService.collection("hweets").add({
-      text: hweet,
-      createdAt: Date.now(),
-      creatorId: userObj.uid,
-    });
-    setHweet("");
+    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+    const response = await fileRef.putString(attachment, "data_url");
+    console.log(response);
+    // await dbService.collection("hweets").add({
+    //   text: hweet,
+    //   createdAt: Date.now(),
+    //   creatorId: userObj.uid,
+    // });
+    // setHweet("");
   };
   const onChange = event => {
     const {
