@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = ({ userObj }) => {
   const [hweet, setHweet] = useState("");
   const [hweets, setHweets] = useState([]);
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
 
   useEffect(() => {
     dbService.collection("hweets").onSnapshot(snapshot => {
@@ -31,7 +31,7 @@ const Home = ({ userObj }) => {
       creatorId: userObj.uid,
       attachmentUrl,
     };
-    console.log(hweetObj.attachmentUrl);
+    // console.log(hweetObj.attachmentUrl);
 
     await dbService.collection("hweets").add(hweetObj);
     setHweet("");

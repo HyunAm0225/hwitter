@@ -8,7 +8,7 @@ const Hweet = ({ hweetObj, isOwner }) => {
     const ok = window.confirm("Are you sure you want to delete this hweet?");
     if (ok) {
       await dbService.doc(`hweets/${hweetObj.id}`).delete();
-      await storageService.refFromURL(hweetobj.attachmentUrl).delete();
+      await storageService.refFromURL(hweetObj.attachmentUrl).delete();
     }
   };
   const toggleEditing = () => {
