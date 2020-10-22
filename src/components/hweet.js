@@ -31,6 +31,8 @@ const Hweet = ({ hweetObj, isOwner }) => {
     <div>
       {editing ? (
         <>
+          <h4>{hweetObj.text}</h4>
+          {hweetObj.attachmentUrl && <img src={hweetObj.attachmentUrl} width="50px" height="50px" />}
           {isOwner && (
             <>
               <form onSubmit={onSubmit}>
