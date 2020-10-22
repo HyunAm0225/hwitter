@@ -20,9 +20,9 @@ const Home = ({ userObj }) => {
   const onSubmit = async event => {
     event.preventDefault();
     let attachmentUrl = "";
-    if (attachment != "") {
-      const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
-      const response = await fileRef.putString(attachment, "data_url");
+    if (attachment !== "") {
+      const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+      const response = await attachmentRef.putString(attachment, "data_url");
       attachmentUrl = await response.ref.getDownloadURL();
     }
     const hweetObj = {
@@ -31,6 +31,7 @@ const Home = ({ userObj }) => {
       creatorId: userObj.uid,
       attachmentUrl,
     };
+    console.log(hweetObj.attachmentUrl);
 
     await dbService.collection("hweets").add(hweetObj);
     setHweet("");
