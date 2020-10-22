@@ -31,11 +31,15 @@ const Hweet = ({ hweetObj, isOwner }) => {
     <div>
       {editing ? (
         <>
-          <form onSubmit={onSubmit}>
-            <input type="text" placeholder="Edit your hweet" value={newHweet} onChange={onChange} required />
-            <input type="submit" value="Update Hweet" />
-          </form>
-          <button onClick={toggleEditing}>Cancle</button>
+          {isOwner && (
+            <>
+              <form onSubmit={onSubmit}>
+                <input type="text" placeholder="Edit your hweet" value={newHweet} onChange={onChange} required />
+                <input type="submit" value="Update Hweet" />
+              </form>
+              <button onClick={toggleEditing}>Cancle</button>
+            </>
+          )}
         </>
       ) : (
         <>
