@@ -34,7 +34,9 @@ function App() {
       ) : (
         "Initializing..."
       )}
-      <footer>&copy;Hwitter{new Date().getFullYear()}</footer>
+      <footer style={{ display: "flex", justifyContent: "center", marginTop: 50 }}>
+        &copy;Hwitter{new Date().getFullYear()}
+      </footer>
     </>
   );
 }
