@@ -55,7 +55,7 @@ const Hweet = ({ hweetObj, isOwner }) => {
           <h4>{hweetObj.text}</h4>
           {hweetObj.attachmentUrl && <img src={hweetObj.attachmentUrl} />}
           {isOwner && (
-            <div class="hweet__actions">
+            <div className="hweet__actions">
               <span onClick={onDeleteClick}>
                 <FontAwesomeIcon icon={faTrash} />
               </span>

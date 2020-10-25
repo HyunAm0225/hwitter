@@ -7,13 +7,16 @@ const Home = ({ userObj }) => {
   const [hweets, setHweets] = useState([]);
 
   useEffect(() => {
-    dbService.collection("hweets").onSnapshot(snapshot => {
-      const hweetArray = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setHweets(hweetArray);
-    });
+    dbService
+      .collection("hweets")
+      .orderBy("createdAt", "desc")
+      .onSnapshot(snapshot => {
+        const hweetArray = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setHweets(hweetArray);
+      });
   }, []);
 
   return (

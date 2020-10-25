@@ -1,13 +1,13 @@
 @import "https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css";
 
-* {
+input {
+  all: unset;
+  appearance: none;
   box-sizing: border-box;
 }
 
-input {
-  all: unset;
+* {
   box-sizing: border-box;
-  appearance: none;
 }
 
 body {
@@ -123,6 +123,7 @@ form {
   padding: 10px 0px;
   text-align: center;
   border-radius: 20px;
+  box-sizing: border-box;
   color: white;
 }
 
@@ -247,6 +248,7 @@ form {
   background-color: rgba(255, 255, 255, 1);
   margin-bottom: 10px;
   font-size: 12px;
+  box-sizing: content-box;
   color: black;
 }
 
@@ -254,7 +256,8 @@ form {
   text-align: center;
   background: #04aaff;
   color: white;
-  margin-top: 10;
+  margin-top: 10px;
+  box-sizing: content-box;
   cursor: pointer;
 }
 
